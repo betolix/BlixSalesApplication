@@ -1,19 +1,28 @@
 package io.h3llo.blixsales.service;
 
 import io.h3llo.blixsales.model.Category;
-import io.h3llo.blixsales.repo.CategoryRepoImpl;
 import io.h3llo.blixsales.repo.ICategoryRepo;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryService {
+//@AllArgsConstructor
+ @RequiredArgsConstructor
+public class CategoryServiceImpl implements ICategoryService {
 
 
-    @Autowired
+    //@Autowired
     //private CategoryRepoImpl repo;// = new CategoryRepo();
-    private ICategoryRepo repo;// = new CategoryRepo();
+    private final ICategoryRepo repo;// = new CategoryRepo();
 
+
+    /*public CategoryServiceImpl(ICategoryRepo repo) {
+        this.repo = repo;
+    }*/
+
+    @Override
     public Category saveAndValid (Category category){
         if(category.getIdCategory() == 0){
 
