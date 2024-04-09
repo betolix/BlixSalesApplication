@@ -3,6 +3,8 @@ package io.h3llo.blixsales.controller;
 import io.h3llo.blixsales.model.Category;
 import io.h3llo.blixsales.service.ICategoryService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,29 +18,38 @@ public class CategoryController {
     private final ICategoryService service; // = new CategoryService();
 
     @GetMapping
-    public List<Category> readAll() throws Exception{
-        return service.readAll();
+    public ResponseEntity<List<Category>> readAll() throws Exception{
+        List<Category> list = service.readAll();
+
+        return ResponseEntity.ok(list);
+        //return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Category readById(@PathVariable("id") Integer id) throws Exception{
-        return service.readById(id);
+    public ResponseEntity<Category> readById(@PathVariable("id") Integer id) throws Exception{
+        Category obj = service.readById(id);
+        return ResponseEntity.ok(obj);
     }
 
     @PostMapping
-    public Category save(@RequestBody Category category) throws Exception {
-        return service.save(category);
+    public ResponseEntity<Category> save(@RequestBody Category category) throws Exception {
+        Category obj = service.save(category);
+        return new ResponseEntity<>(obj, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Category update(@PathVariable("id") Integer id, @RequestBody Category category) throws Exception {
+    public ResponseEntity<Category> update(@PathVariable("id") Integer id, @RequestBody Category category) throws Exception {
         category.setIdCategory(id);
-        return service.update(category, id);
+        Category obj = service.update(category, id);
+        return ResponseEntity.ok(obj);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Integer id) throws Exception{
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) throws Exception{
         service.delete(id);
+
+        return ResponseEntity.noContent().build();
+        //return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /* public CategoryController(ICategoryService service) {
