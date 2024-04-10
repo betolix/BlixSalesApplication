@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -39,6 +40,8 @@ public class Sale {
     @Column(nullable = false)
     private boolean enabled;
 
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+    private List<SaleDetail> details;
 
 
 
