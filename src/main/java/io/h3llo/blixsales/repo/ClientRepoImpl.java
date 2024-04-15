@@ -1,16 +1,13 @@
 package io.h3llo.blixsales.repo;
 
-import io.h3llo.blixsales.model.Category;
-import org.springframework.stereotype.Repository;
-
 
 //@Repository
-public class CategoryRepoImpl { // implements ICategoryRepo{
+public class ClientRepoImpl { // implements IClientRepo{
 
     /*
     @Override
-    public Category save(Category category) {
+    public Client save(Client client) {
         System.out.println("Saving....");
-        return category;
+        return client;
     } */
 }
