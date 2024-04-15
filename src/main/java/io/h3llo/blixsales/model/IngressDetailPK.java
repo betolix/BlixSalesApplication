@@ -3,10 +3,12 @@ package io.h3llo.blixsales.model;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
 @Embeddable
+@EqualsAndHashCode
 public class IngressDetailPK implements Serializable {
 
     @ManyToOne
