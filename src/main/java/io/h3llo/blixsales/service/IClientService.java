@@ -1,19 +1,19 @@
 package io.h3llo.blixsales.service;
 
-import io.h3llo.blixsales.model.Category;
+import io.h3llo.blixsales.model.Client;
 
 import java.util.List;
 
-public interface ICategoryService {
-    // public Category saveAndValid(Category category);
+public interface IClientService {
+    // public Client saveAndValid(Client client);
 
-    Category save(Category category) throws Exception;
+    Client save(Client client) throws Exception;
 
-    Category update(Category category, Integer id) throws Exception;
+    Client update(Client client, Integer id) throws Exception;
 
-    List<Category> readAll() throws Exception;
+    List<Client> readAll() throws Exception;
 
-    Category readById(Integer id) throws Exception;
+    Client readById(Integer id) throws Exception;
 
     void delete(Integer id) throws Exception;
 
