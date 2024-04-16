@@ -2,6 +2,7 @@ package io.h3llo.blixsales.service.impl;
 
 import io.h3llo.blixsales.model.Client;
 import io.h3llo.blixsales.repo.IClientRepo;
+import io.h3llo.blixsales.repo.IGenericRepo;
 import io.h3llo.blixsales.service.IClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,14 +12,20 @@ import java.util.List;
 @Service
 //@AllArgsConstructor
  @RequiredArgsConstructor
-public class ClientServiceImpl implements IClientService {
+public class ClientServiceImpl extends CRUDImpl<Client, Integer> implements IClientService {
 
 
     //@Autowired
     //private ClientRepoImpl repo;// = new ClientRepo();
 
-    private final IClientRepo repo;// = new ClientRepo();
+    private final IClientRepo repo;   // = new ClientRepo();
 
+    @Override
+    protected IGenericRepo<Client, Integer> getRepo() {
+        return repo;
+    }
+
+    /*
     @Override
     public Client save(Client client) throws Exception {
         return repo.save(client);
@@ -43,6 +50,7 @@ public class ClientServiceImpl implements IClientService {
     public void delete(Integer id) throws Exception {
         repo.deleteById(id);
     }
+     */
 
 
 

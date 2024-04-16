@@ -2,6 +2,7 @@ package io.h3llo.blixsales.service.impl;
 
 import io.h3llo.blixsales.model.Category;
 import io.h3llo.blixsales.repo.ICategoryRepo;
+import io.h3llo.blixsales.repo.IGenericRepo;
 import io.h3llo.blixsales.service.ICategoryService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +14,20 @@ import java.util.List;
 @Service
 //@AllArgsConstructor
  @RequiredArgsConstructor
-public class CategoryServiceImpl implements ICategoryService {
+public class CategoryServiceImpl extends CRUDImpl<Category, Integer> implements ICategoryService {
 
 
     //@Autowired
-    //private CategoryRepoImpl repo;// = new CategoryRepo();
+    //private CategoryRepoImpl repo;  // = new CategoryRepo();
 
-    private final ICategoryRepo repo;// = new CategoryRepo();
+    private final ICategoryRepo repo;  // = new CategoryRepo();
 
+    @Override
+    protected IGenericRepo<Category, Integer> getRepo() {
+        return repo;
+    }
+
+/*
     @Override
     public Category save(Category category) throws Exception {
         return repo.save(category);
@@ -46,7 +53,7 @@ public class CategoryServiceImpl implements ICategoryService {
         repo.deleteById(id);
     }
 
-
+*/
 
     /*public CategoryServiceImpl(ICategoryRepo repo) {
         this.repo = repo;
