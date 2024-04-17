@@ -1,6 +1,7 @@
 package io.h3llo.blixsales.controller;
 
 import io.h3llo.blixsales.dto.CategoryDTO;
+import io.h3llo.blixsales.dto.CategoryRecord;
 import io.h3llo.blixsales.model.Category;
 import io.h3llo.blixsales.service.ICategoryService;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,8 @@ public class CategoryController {
     private final ICategoryService service; // = new CategoryService();
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> readAll() throws Exception{
-        List<CategoryDTO> list = service.readAll().stream().map(e -> new CategoryDTO(e.getIdCategory(), e.getName(), e.getDescription(), e.isEnabled())).toList();
+    public ResponseEntity<List<CategoryRecord>> readAll() throws Exception{
+        List<CategoryRecord> list = service.readAll().stream().map(e -> new CategoryRecord(e.getIdCategory(), e.getName(), e.getDescription(), e.isEnabled())).toList();
 
         return ResponseEntity.ok(list);
         //return new ResponseEntity<>(list, HttpStatus.OK);
