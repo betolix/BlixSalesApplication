@@ -28,7 +28,8 @@ public class Category {
     @Column(nullable = false)
     private boolean enabled;
 
-    @Column(name="edad")
-    private int age;
+
+//    @Column(name="edad")
+//    private int age;
 
 }
