@@ -3,6 +3,7 @@ package io.h3llo.blixsales.controller;
 import io.h3llo.blixsales.dto.CategoryDTO;
 import io.h3llo.blixsales.dto.CategoryRecord;
 import io.h3llo.blixsales.dto.GenericResponse;
+import io.h3llo.blixsales.dto.GenericResponseRecord;
 import io.h3llo.blixsales.model.Category;
 import io.h3llo.blixsales.service.ICategoryService;
 import lombok.AllArgsConstructor;
@@ -27,10 +28,10 @@ public class CategoryController {
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<GenericResponse<CategoryDTO>> readAll() throws Exception{
+    public ResponseEntity<GenericResponseRecord<CategoryDTO>> readAll() throws Exception{
         List<CategoryDTO> list = service.readAll().stream().map(this::convertToDto).toList();
 
-        return ResponseEntity.ok(new GenericResponse<>(200, "success", new ArrayList<>(list)));
+        return ResponseEntity.ok(new GenericResponseRecord<>(200, "success", new ArrayList<>(list)));
         //return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
