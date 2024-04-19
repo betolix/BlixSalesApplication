@@ -2,6 +2,7 @@ package io.h3llo.blixsales.controller;
 
 import io.h3llo.blixsales.dto.CategoryDTO;
 import io.h3llo.blixsales.dto.CategoryRecord;
+import io.h3llo.blixsales.dto.GenericResponse;
 import io.h3llo.blixsales.model.Category;
 import io.h3llo.blixsales.service.ICategoryService;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -24,25 +27,27 @@ public class CategoryController {
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> readAll() throws Exception{
+    public ResponseEntity<GenericResponse<CategoryDTO>> readAll() throws Exception{
         List<CategoryDTO> list = service.readAll().stream().map(this::convertToDto).toList();
 
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(new GenericResponse<>(200, "success", new ArrayList<>(list)));
         //return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> readById(@PathVariable("id") Integer id) throws Exception{
-        CategoryDTO obj = convertToDto(service.readById(id));
-
-        return ResponseEntity.ok(obj);
-    }
+    /*
 
     @PostMapping
     public ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO dto) throws Exception {
-        Category obj = service.save(convertToEntity(dto));
+        Category dto = service.save(convertToEntity(dto));
 
-        return new ResponseEntity<>(convertToDto(obj), HttpStatus.CREATED);
+        return new ResponseEntity<>(convertToDto(dto), HttpStatus.CREATED);
+    }*/
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GenericResponse<CategoryDTO>> readById(@PathVariable("id") Integer id) throws Exception{
+        CategoryDTO dto = convertToDto(service.readById(id));
+
+        return ResponseEntity.ok(new GenericResponse<>(200, "success", Arrays.asList(dto)));
     }
 
     @PutMapping("/{id}")
