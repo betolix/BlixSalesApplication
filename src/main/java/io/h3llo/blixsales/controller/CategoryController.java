@@ -6,6 +6,7 @@ import io.h3llo.blixsales.dto.GenericResponse;
 import io.h3llo.blixsales.dto.GenericResponseRecord;
 import io.h3llo.blixsales.model.Category;
 import io.h3llo.blixsales.service.ICategoryService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -35,14 +36,14 @@ public class CategoryController {
         //return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    /*
+
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO dto) throws Exception {
-        Category dto = service.save(convertToEntity(dto));
+    public ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO dto) throws Exception {
+        Category obj = service.save(convertToEntity(dto));
 
-        return new ResponseEntity<>(convertToDto(dto), HttpStatus.CREATED);
-    }*/
+        return new ResponseEntity<>(convertToDto(obj), HttpStatus.CREATED);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<GenericResponse<CategoryDTO>> readById(@PathVariable("id") Integer id) throws Exception{
@@ -52,7 +53,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDTO> update(@PathVariable("id") Integer id, @RequestBody CategoryDTO dto) throws Exception {
+    public ResponseEntity<CategoryDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody CategoryDTO dto) throws Exception {
         //category.setIdCategory(id);
         Category obj = service.update(convertToEntity(dto), id);
 
