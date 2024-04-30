@@ -47,6 +47,7 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GenericResponse<CategoryDTO>> readById(@PathVariable("id") Integer id) throws Exception{
+
         CategoryDTO dto = convertToDto(service.readById(id));
 
         return ResponseEntity.ok(new GenericResponse<>(200, "success", Arrays.asList(dto)));
