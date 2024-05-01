@@ -1,10 +1,10 @@
 package io.h3llo.blixsales.controller;
 
+import io.h3llo.blixsales.dto.ProviderDTO;
 import io.h3llo.blixsales.dto.GenericResponse;
 import io.h3llo.blixsales.dto.GenericResponseRecord;
-import io.h3llo.blixsales.dto.ClientDTO;
-import io.h3llo.blixsales.model.Client;
-import io.h3llo.blixsales.service.IClientService;
+import io.h3llo.blixsales.model.Provider;
+import io.h3llo.blixsales.service.IProviderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,18 +18,18 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("/providers")
 //@AllArgsConstructor
 @RequiredArgsConstructor
-public class ClientController {
+public class ProviderController {
 
-    private final IClientService service;
+    private final IProviderService service;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<GenericResponseRecord<ClientDTO>> readAll() throws Exception{
-        List<ClientDTO> list = service.readAll().stream().map(this::convertToDto).toList();
+    public ResponseEntity<GenericResponseRecord<ProviderDTO>> readAll() throws Exception{
+        List<ProviderDTO> list = service.readAll().stream().map(this::convertToDto).toList();
 
         return ResponseEntity.ok(new GenericResponseRecord<>(200, "success", new ArrayList<>(list)));
 
@@ -38,24 +38,24 @@ public class ClientController {
 
 
     @PostMapping
-    public ResponseEntity<ClientDTO> save(@Valid @RequestBody ClientDTO dto) throws Exception {
-        Client obj = service.save(convertToEntity(dto));
+    public ResponseEntity<ProviderDTO> save(@Valid @RequestBody ProviderDTO dto) throws Exception {
+        Provider obj = service.save(convertToEntity(dto));
 
         return new ResponseEntity<>(convertToDto(obj), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenericResponse<ClientDTO>> readById(@PathVariable("id") Integer id) throws Exception{
+    public ResponseEntity<GenericResponse<ProviderDTO>> readById(@PathVariable("id") Integer id) throws Exception{
 
-        ClientDTO dto = convertToDto(service.readById(id));
+        ProviderDTO dto = convertToDto(service.readById(id));
 
         return ResponseEntity.ok(new GenericResponse<>(200, "success", Arrays.asList(dto)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody ClientDTO dto) throws Exception {
-        //category.setIdClient(id);
-        Client obj = service.update(convertToEntity(dto), id);
+    public ResponseEntity<ProviderDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody ProviderDTO dto) throws Exception {
+        //category.setIdProvider(id);
+        Provider obj = service.update(convertToEntity(dto), id);
 
         return ResponseEntity.ok(convertToDto(obj));
     }
@@ -68,12 +68,12 @@ public class ClientController {
     }
 
     /////////////////////////////////////////////////////////////////////////
-    private ClientDTO convertToDto (Client obj) {
-        return modelMapper.map(obj, ClientDTO.class);
+    private ProviderDTO convertToDto (Provider obj) {
+        return modelMapper.map(obj, ProviderDTO.class);
     }
 
-    private Client convertToEntity(ClientDTO dto) {
-        return modelMapper.map(dto, Client.class);
+    private Provider convertToEntity(ProviderDTO dto) {
+        return modelMapper.map(dto, Provider.class);
     }
 
 }

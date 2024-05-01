@@ -1,7 +1,9 @@
 package io.h3llo.blixsales.config;
 
 import io.h3llo.blixsales.dto.CategoryDTO;
+import io.h3llo.blixsales.dto.ProductDTO;
 import io.h3llo.blixsales.model.Category;
+import io.h3llo.blixsales.model.Product;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,4 +27,30 @@ public class MapperConfig {
 
         return mapper;
     }
+
+    @Bean("productMapper")
+    public ModelMapper productMapper(){
+
+        ModelMapper mapper = new ModelMapper ();
+
+        /*
+        //Lectura
+        mapper.createTypeMap(Product.class, ProductDTO.class)
+                .addMapping(e -> e.getCategory().getIdCategory(), (dest, v) -> dest.setIdCategoria((Integer) v));
+
+        //Escritura
+        mapper. createTypeMap(ProductDTO.class, Product.class)
+                .addMapping(ProductDTO::getIdCategoria, (dest, v) -> dest.getCategory().setIdCategory ((Integer) v));
+
+        */
+
+        return mapper;
+    }
+
+    @Bean("defaultMapper")
+    public ModelMapper defaultMapper(){
+        return new ModelMapper();
+    }
+
+
 }
