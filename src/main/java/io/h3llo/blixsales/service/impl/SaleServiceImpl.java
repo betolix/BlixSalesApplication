@@ -1,22 +1,22 @@
 package io.h3llo.blixsales.service.impl;
 
-import io.h3llo.blixsales.model.Role;
-import io.h3llo.blixsales.repo.IRoleRepo;
+import io.h3llo.blixsales.model.Sale;
 import io.h3llo.blixsales.repo.IGenericRepo;
-import io.h3llo.blixsales.service.IRoleService;
+import io.h3llo.blixsales.repo.ISaleRepo;
+import io.h3llo.blixsales.service.ISaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 //@AllArgsConstructor
  @RequiredArgsConstructor
-public class RoleServiceImpl extends CRUDImpl<Role, Integer> implements IRoleService {
+public class SaleServiceImpl extends CRUDImpl<Sale, Integer> implements ISaleService {
 
 
-    private final IRoleRepo repo;
+    private final ISaleRepo repo;
 
     @Override
-    protected IGenericRepo<Role, Integer> getRepo() {
+    protected IGenericRepo<Sale, Integer> getRepo() {
         return repo;
     }
 

@@ -1,5 +1,6 @@
 package io.h3llo.blixsales.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -11,25 +12,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProductDTO {
+public class SaleDetailDTO {
 
-    private Integer idProduct;
+    // @NotNull//!!!!
+    @JsonBackReference
+    private SaleDTO sale;
+
+    @NotNull
+    private ProductDTO product;
 
     @NotNull
     @Min(value = 1)
-    private Integer idCategory; // idCategoria
-
-    @NotNull
-    private String nameProduct;
-
-    @NotNull
-    private String descriptionProduct;
+    private short quantity;
 
     @NotNull
     @Min(value = 1)
-    private double priceProduct;
+    private double salePrice;
 
     @NotNull
-    private boolean enabledProduct;
+    @Min(value = 0)
+    private double discount;
 
 }

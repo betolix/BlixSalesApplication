@@ -1,10 +1,10 @@
 package io.h3llo.blixsales.controller;
 
-import io.h3llo.blixsales.dto.RoleDTO;
 import io.h3llo.blixsales.dto.GenericResponse;
 import io.h3llo.blixsales.dto.GenericResponseRecord;
-import io.h3llo.blixsales.model.Role;
-import io.h3llo.blixsales.service.IRoleService;
+import io.h3llo.blixsales.dto.SaleDTO;
+import io.h3llo.blixsales.model.Sale;
+import io.h3llo.blixsales.service.ISaleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,44 +18,43 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/sales")
 //@AllArgsConstructor
 @RequiredArgsConstructor
-public class RoleController {
+public class SaleController {
 
-    private final IRoleService service;
+    private final ISaleService service;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<GenericResponseRecord<RoleDTO>> readAll() throws Exception{
-        List<RoleDTO> list = service.readAll().stream().map(this::convertToDto).toList();
+    public ResponseEntity<GenericResponseRecord<SaleDTO>> readAll() throws Exception{
+        List<SaleDTO> list = service.readAll().stream().map(this::convertToDto).toList();
 
         return ResponseEntity.ok(new GenericResponseRecord<>(200, "success", new ArrayList<>(list)));
 
     }
 
 
-
     @PostMapping
-    public ResponseEntity<RoleDTO> save(@Valid @RequestBody RoleDTO dto) throws Exception {
-        Role obj = service.save(convertToEntity(dto));
+    public ResponseEntity<SaleDTO> save(@Valid @RequestBody SaleDTO dto) throws Exception {
+        Sale obj = service.save(convertToEntity(dto));
 
         return new ResponseEntity<>(convertToDto(obj), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenericResponse<RoleDTO>> readById(@PathVariable("id") Integer id) throws Exception{
+    public ResponseEntity<GenericResponse<SaleDTO>> readById(@PathVariable("id") Integer id) throws Exception{
 
-        RoleDTO dto = convertToDto(service.readById(id));
+        SaleDTO dto = convertToDto(service.readById(id));
 
         return ResponseEntity.ok(new GenericResponse<>(200, "success", Arrays.asList(dto)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoleDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody RoleDTO dto) throws Exception {
-        //category.setIdRole(id);
-        Role obj = service.update(convertToEntity(dto), id);
+    public ResponseEntity<SaleDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody SaleDTO dto) throws Exception {
+        //category.setIdSale(id);
+        Sale obj = service.update(convertToEntity(dto), id);
 
         return ResponseEntity.ok(convertToDto(obj));
     }
@@ -68,12 +67,12 @@ public class RoleController {
     }
 
     /////////////////////////////////////////////////////////////////////////
-    private RoleDTO convertToDto (Role obj) {
-        return modelMapper.map(obj, RoleDTO.class);
+    private SaleDTO convertToDto (Sale obj) {
+        return modelMapper.map(obj, SaleDTO.class);
     }
 
-    private Role convertToEntity(RoleDTO dto) {
-        return modelMapper.map(dto, Role.class);
+    private Sale convertToEntity(SaleDTO dto) {
+        return modelMapper.map(dto, Sale.class);
     }
 
 }
