@@ -2,6 +2,7 @@ package io.h3llo.blixsales.repo;
 
 import io.h3llo.blixsales.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -64,5 +65,16 @@ public interface ICategoryRepo extends IGenericRepo<Category, Integer> {
 
     @Query("SELECT new io.h3llo.blixsales.model.Category (c.name, c.enabled) FROM Category c WHERE c.name = :name AND c.description LIKE %:desc%")
     List<Category> getNameAndDescription2(@Param("name") String name, @Param("desc") String description);
+
+    //SQL: NativeQuery
+
+    @Query(value = "SELECT * FROM category c WHERE c.name = :name", nativeQuery = true)
+    List<Category> getNameSQL(@Param("name") String name);
+
+    @Modifying
+    @Query(value = "UPDATE category SET name = :name", nativeQuery = true)
+    Integer updateNames (@Param("name") String name);
+
+
 
 }

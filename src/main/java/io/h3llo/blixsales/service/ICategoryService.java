@@ -27,4 +27,6 @@ public interface ICategoryService extends ICRUD<Category, Integer> {
 
     List<Category> getNameAndDescription2(String name, String description);
 
+    List<Category> getNameSQL(String name);
+
 }

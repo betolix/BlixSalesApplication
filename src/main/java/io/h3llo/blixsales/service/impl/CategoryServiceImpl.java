@@ -52,6 +52,11 @@ public class CategoryServiceImpl extends CRUDImpl<Category, Integer> implements 
         return repo.getNameAndDescription2(name, description);
     }
 
+    @Override
+    public List<Category> getNameSQL(String name) {
+        return repo.getNameSQL(name);
+    }
+
 /*
     @Override
     public Category save(Category category) throws Exception {

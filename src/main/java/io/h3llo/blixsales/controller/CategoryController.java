@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -103,6 +105,13 @@ public class CategoryController {
     @GetMapping("/get/name/description2")
     public ResponseEntity<List<CategoryDTO>> getNameAndDescription2(@RequestParam("name") String name, @RequestParam("description") String description) throws Exception {
         List<CategoryDTO> lst = service.getNameAndDescription2(name, description).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(lst);
+    }
+
+    @GetMapping("/get/name/sql")
+    public ResponseEntity<List<CategoryDTO>> getNameSQL(@RequestParam("name") String name) throws Exception {
+        List<CategoryDTO> lst = service.getNameSQL(name).stream().map(this::convertToDto).toList();
 
         return ResponseEntity.ok(lst);
     }
