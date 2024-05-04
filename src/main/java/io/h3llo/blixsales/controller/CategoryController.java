@@ -93,6 +93,20 @@ public class CategoryController {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/get/name/description1")
+    public ResponseEntity<List<CategoryDTO>> getNameAndDescription1(@RequestParam("name") String name, @RequestParam("description") String description) throws Exception {
+        List<CategoryDTO> lst = service.getNameAndDescription1(name, description).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(lst);
+    }
+
+    @GetMapping("/get/name/description2")
+    public ResponseEntity<List<CategoryDTO>> getNameAndDescription2(@RequestParam("name") String name, @RequestParam("description") String description) throws Exception {
+        List<CategoryDTO> lst = service.getNameAndDescription2(name, description).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(lst);
+    }
+
 
 
 

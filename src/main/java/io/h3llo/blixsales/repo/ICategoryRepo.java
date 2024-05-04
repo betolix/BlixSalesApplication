@@ -2,6 +2,8 @@ package io.h3llo.blixsales.repo;
 
 import io.h3llo.blixsales.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -55,5 +57,12 @@ public interface ICategoryRepo extends IGenericRepo<Category, Integer> {
     List<Category> findByNameOrderByDescriptionAsc(String name);
 
 
+    //JPQL: Java Persistence Query Language
+
+    @Query("FROM Category c WHERE c.name = :name AND c.description LIKE %:desc%")
+    List<Category> getNameAndDescription1(@Param("name") String name, @Param("desc") String description);
+
+    @Query("SELECT new io.h3llo.blixsales.model.Category (c.name, c.enabled) FROM Category c WHERE c.name = :name AND c.description LIKE %:desc%")
+    List<Category> getNameAndDescription2(@Param("name") String name, @Param("desc") String description);
 
 }

@@ -1,6 +1,7 @@
 package io.h3llo.blixsales.service;
 
 import io.h3llo.blixsales.model.Category;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -22,5 +23,8 @@ public interface ICategoryService extends ICRUD<Category, Integer> {
 
     List<Category> findByNameAndEnabled(String name, boolean enabled);
 
+    List<Category> getNameAndDescription1(String name, String description);
+
+    List<Category> getNameAndDescription2(String name, String description);
 
 }

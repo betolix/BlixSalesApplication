@@ -42,6 +42,16 @@ public class CategoryServiceImpl extends CRUDImpl<Category, Integer> implements 
         return repo.findByNameAndEnabled(name, enabled);
     }
 
+    @Override
+    public List<Category> getNameAndDescription1(String name, String description) {
+        return repo.getNameAndDescription1(name, description);
+    }
+
+    @Override
+    public List<Category> getNameAndDescription2(String name, String description) {
+        return repo.getNameAndDescription2(name, description);
+    }
+
 /*
     @Override
     public Category save(Category category) throws Exception {
