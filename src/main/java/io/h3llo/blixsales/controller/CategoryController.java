@@ -71,7 +71,33 @@ public class CategoryController {
         //return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    /////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////// - QUERIES - //////////////////////////////////////////
+    @GetMapping("/find/name/{name}")
+    public ResponseEntity<List<CategoryDTO>> findByName(@PathVariable("name") String name) throws Exception {
+        List<CategoryDTO> list = service.findByName(name).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/find/name/like/{name}")
+    public ResponseEntity<List<CategoryDTO>> findByNameLike(@PathVariable("name") String name) throws Exception {
+        List<CategoryDTO> list = service.findByNameLike(name).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/find/name/enabled")
+    public ResponseEntity<List<CategoryDTO>> findByNameAndEnabled(@RequestParam ("name") String name, @RequestParam ("enabled") boolean enabled) throws Exception {
+        List<CategoryDTO> list = service.findByNameAndEnabled(name, enabled).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////
     private CategoryDTO convertToDto (Category obj) {
         return modelMapper.map(obj, CategoryDTO.class);
     }
