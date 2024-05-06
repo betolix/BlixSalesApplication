@@ -76,6 +76,11 @@ public class SaleController {
         return ResponseEntity.ok(service.callProcedure2());
     }
 
+    @GetMapping("/resume3")
+    public ResponseEntity<List<ProcedureDTO>> getSaleResume3(){
+        return ResponseEntity.ok(service.callProcedure3());
+    }
+
 
 
 

@@ -16,4 +16,7 @@ public interface ISaleRepo extends IGenericRepo<Sale, Integer> {
     @Query(value = "select * from fn_sales()", nativeQuery = true)
     List<IProcedureDTO> callProcedure2();
 
+    @Query(name = "Sale.fn_sales", nativeQuery = true)
+    List<ProcedureDTO> callProcedure3();
+
 }

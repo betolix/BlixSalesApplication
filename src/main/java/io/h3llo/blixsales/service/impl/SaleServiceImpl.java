@@ -37,13 +37,17 @@ public class SaleServiceImpl extends CRUDImpl<Sale, Integer> implements ISaleSer
 
             procedureDTOList.add(procedureDTO);
         });
-
         return procedureDTOList;
     }
 
     @Override
     public List<IProcedureDTO> callProcedure2() {
         return repo.callProcedure2();
+    }
+
+    @Override
+    public List<ProcedureDTO> callProcedure3() {
+        return repo.callProcedure3();
     }
 
 
