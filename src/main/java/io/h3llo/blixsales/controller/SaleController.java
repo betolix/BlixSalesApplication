@@ -1,8 +1,6 @@
 package io.h3llo.blixsales.controller;
 
-import io.h3llo.blixsales.dto.GenericResponse;
-import io.h3llo.blixsales.dto.GenericResponseRecord;
-import io.h3llo.blixsales.dto.SaleDTO;
+import io.h3llo.blixsales.dto.*;
 import io.h3llo.blixsales.model.Sale;
 import io.h3llo.blixsales.service.ISaleService;
 import jakarta.validation.Valid;
@@ -65,6 +63,21 @@ public class SaleController {
 
         return ResponseEntity.noContent().build();
     }
+
+    /////////////////////////////////////////////////////////////////////////
+
+    @GetMapping("/resume")
+    public ResponseEntity<List<ProcedureDTO>> getSaleResume1(){
+        return ResponseEntity.ok(service.callProcedure1());
+    }
+
+    @GetMapping("/resume2")
+    public ResponseEntity<List<IProcedureDTO>> getSaleResume2(){
+        return ResponseEntity.ok(service.callProcedure2());
+    }
+
+
+
 
     /////////////////////////////////////////////////////////////////////////
     private SaleDTO convertToDto (Sale obj) {

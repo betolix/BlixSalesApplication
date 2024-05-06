@@ -11,6 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -117,6 +120,31 @@ public class CategoryController {
     }
 
 
+    @GetMapping ("/pagination")
+    public ResponseEntity<Page<CategoryDTO>> findPage(Pageable pageable) throws Exception {
+        Page<CategoryDTO> page = service.findPage(pageable).map(this::convertToDto);
+
+        return ResponseEntity.ok(page);
+    }
+
+
+    @GetMapping ("/pagination2")
+    public ResponseEntity<Page<CategoryDTO>> findPage2(
+            @RequestParam(name = "p", defaultValue = "0") int page,
+            @RequestParam(name = "s", defaultValue = "3") int size
+    ) throws Exception {
+        Page<CategoryDTO> pageDTO = service.findPage(PageRequest.of(page, size)).map(this::convertToDto);
+
+        return ResponseEntity.ok(pageDTO);
+    }
+
+
+    @GetMapping("/order")
+    public ResponseEntity<List<CategoryDTO>> findAllOrder(@RequestParam(name = "param", defaultValue = "ASC") String param){
+
+        List<CategoryDTO> list = service.findAllOrder(param).stream().map(this::convertToDto).toList();
+        return ResponseEntity.ok(list);
+    }
 
 
 

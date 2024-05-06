@@ -7,6 +7,9 @@ import io.h3llo.blixsales.service.ICategoryService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,6 +58,17 @@ public class CategoryServiceImpl extends CRUDImpl<Category, Integer> implements 
     @Override
     public List<Category> getNameSQL(String name) {
         return repo.getNameSQL(name);
+    }
+
+    @Override
+    public Page<Category> findPage(Pageable pageable) {
+        return repo.findAll(pageable);
+    }
+
+    @Override
+    public List<Category> findAllOrder(String param) {
+        Sort.Direction direction = param.equalsIgnoreCase("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC;
+        return repo.findAll(Sort.by(direction, "name"));
     }
 
 /*
