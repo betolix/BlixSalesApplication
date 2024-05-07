@@ -81,6 +81,12 @@ public class SaleController {
         return ResponseEntity.ok(service.callProcedure3());
     }
 
+    @GetMapping("/resume4")
+    public ResponseEntity<Void> getSaleResume4(){
+        service.callProcedure4();
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 

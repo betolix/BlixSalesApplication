@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 //@AllArgsConstructor
- @RequiredArgsConstructor
+@RequiredArgsConstructor
 public class SaleServiceImpl extends CRUDImpl<Sale, Integer> implements ISaleService {
 
 
@@ -48,6 +48,11 @@ public class SaleServiceImpl extends CRUDImpl<Sale, Integer> implements ISaleSer
     @Override
     public List<ProcedureDTO> callProcedure3() {
         return repo.callProcedure3();
+    }
+
+    @Override
+    public void callProcedure4() {
+        repo.callProcedure4();
     }
 
 
