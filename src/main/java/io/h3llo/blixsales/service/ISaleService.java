@@ -20,5 +20,8 @@ public interface ISaleService extends ICRUD<Sale, Integer>{
 
     Map<String, Long> getSalesCountBySeller();
 
+    Map<String, Double> getMostSellerProduct(); // EL PRODUCTO MAS VENDIDO
+
+
 
 }

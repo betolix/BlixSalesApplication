@@ -3,6 +3,7 @@ package io.h3llo.blixsales.service.impl;
 import io.h3llo.blixsales.dto.IProcedureDTO;
 import io.h3llo.blixsales.dto.ProcedureDTO;
 import io.h3llo.blixsales.model.Sale;
+import io.h3llo.blixsales.model.SaleDetail;
 import io.h3llo.blixsales.repo.IGenericRepo;
 import io.h3llo.blixsales.repo.ISaleRepo;
 import io.h3llo.blixsales.service.ISaleService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.*;
 
@@ -84,6 +86,30 @@ public class SaleServiceImpl extends CRUDImpl<Sale, Integer> implements ISaleSer
 
     }
 
+    @Override
+    public Map<String, Double> getMostSellerProduct() {
+        Stream<Sale> saleStream = repo.findAll().stream();
+        Stream<List<SaleDetail>> lsStream = saleStream.map (Sale::getDetails); //sale -> sale.getDetails()
+
+        //[ [det1, det2], [det3, det4], [det5, det6, det7]
+
+        //[det1, det2, det3, det4, det5 ....] Stream<SaleDetail>
+
+        Stream<SaleDetail> streamDetail = lsStream.flatMap(Collection::stream); //list -> list.stream()
+
+        Map<String, Double> byProduct = streamDetail
+                .collect(groupingBy(d -> d.getProduct().getName(), summingDouble(SaleDetail::getQuantity)));
+
+        return byProduct.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new
+                ));
+
+    }
 
 }
 

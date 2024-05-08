@@ -116,6 +116,15 @@ public class SaleController {
     }
 
 
+    @GetMapping("/bestproduct")
+    public ResponseEntity<Map<String, Double>> getBestProduct(){
+        Map<String, Double> byProduct = service.getMostSellerProduct();
+
+        return ResponseEntity.ok(byProduct);
+
+    }
+
+
     /////////////////////////////////////////////////////////////////////////
     private SaleDTO convertToDto (Sale obj) {
         return modelMapper.map(obj, SaleDTO.class);
