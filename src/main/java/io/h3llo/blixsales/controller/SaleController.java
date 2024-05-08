@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/sales")
@@ -88,6 +89,31 @@ public class SaleController {
     }
 
 
+    @GetMapping("/mostexpensive")
+    public ResponseEntity<SaleDTO> getMostExpensive(){
+        SaleDTO dto = convertToDto(service.getSaleMostExpensive());
+
+        return ResponseEntity.ok(dto);
+
+    }
+
+
+    @GetMapping("/bestseller")
+    public ResponseEntity<String> getBestSeller(){
+        String person = service.getBestSellerPerson();
+
+        return ResponseEntity.ok(person);
+
+    }
+
+
+    @GetMapping("/sellercount")
+    public ResponseEntity<Map<String, Long>> getSellerCount(){
+        Map<String, Long> byUser = service.getSalesCountBySeller();
+
+        return ResponseEntity.ok(byUser);
+
+    }
 
 
     /////////////////////////////////////////////////////////////////////////

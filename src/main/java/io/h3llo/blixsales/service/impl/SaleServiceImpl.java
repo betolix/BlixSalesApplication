@@ -9,8 +9,10 @@ import io.h3llo.blixsales.service.ISaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 
 @Service
@@ -55,5 +57,37 @@ public class SaleServiceImpl extends CRUDImpl<Sale, Integer> implements ISaleSer
         repo.callProcedure4();
     }
 
+    @Override
+    public Sale getSaleMostExpensive() {
+        return repo.findAll()
+                .stream()
+                .max(Comparator.comparing(Sale::getTotal))
+                .orElse(new Sale());
+    }
+
+    @Override
+    public String getBestSellerPerson() {
+        Map<String, Double> byUser = repo.findAll()
+                .stream()
+                .collect(groupingBy(s -> s.getUser().getUsername(), summingDouble(Sale::getTotal)));
+
+        return Collections.max(byUser.entrySet(), Comparator.comparing(Map.Entry::getValue)).getKey();
+    }
+
+    @Override
+    public Map<String, Long> getSalesCountBySeller() {
+        Map<String, Long> byUser = repo.findAll()
+                .stream()
+                .collect(groupingBy(s -> s.getUser().getUsername(), counting()));
+
+        return byUser;
+
+    }
+
 
 }
+
+
+
+
+
