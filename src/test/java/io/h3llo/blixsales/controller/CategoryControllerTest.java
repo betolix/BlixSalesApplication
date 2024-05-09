@@ -1,5 +1,6 @@
 package io.h3llo.blixsales.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.h3llo.blixsales.dto.CategoryDTO;
 import io.h3llo.blixsales.model.Category;
 import io.h3llo.blixsales.service.ICategoryService;
@@ -33,6 +34,9 @@ public class CategoryControllerTest {
 
     @MockBean(name = "categoryMapper")
     private ModelMapper modelMapper;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     Category CATEGORY_1 = new Category (1, "TV", "Television",true);
     Category CATEGORY_2 = new Category (2, "PSP", "Play Station Portable",true);
@@ -82,6 +86,17 @@ public class CategoryControllerTest {
 
     @Test
     void createTest() throws Exception {
+        Mockito.when(service.save(any())).thenReturn(CATEGORY_3);
+        Mockito.when(modelMapper.map(CATEGORY_3, CategoryDTO.class)).thenReturn(CATEGORYDTO_3);
+
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/categories")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(CATEGORYDTO_3))
+        )
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.enabledCategory",is(true)));
 
     }
 
