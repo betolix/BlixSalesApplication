@@ -2,6 +2,7 @@ package io.h3llo.blixsales.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.h3llo.blixsales.dto.CategoryDTO;
+import io.h3llo.blixsales.exception.ModelNotFoundException;
 import io.h3llo.blixsales.model.Category;
 import io.h3llo.blixsales.service.ICategoryService;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -91,16 +93,75 @@ public class CategoryControllerTest {
 
 
         mockMvc.perform(MockMvcRequestBuilders
-                .post("/categories")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(CATEGORYDTO_3))
-        )
+                        .post("/categories")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(CATEGORYDTO_3))
+                )
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.enabledCategory",is(true)));
 
     }
 
+    @Test
+    void updateTest() throws Exception {
+        final int ID = 2;
 
+        Mockito.when(service.update(any(), any())).thenReturn(CATEGORY_2);
+        Mockito.when(modelMapper.map(CATEGORY_2, CategoryDTO.class)).thenReturn(CATEGORYDTO_2);
+
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/categories/" + ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(CATEGORYDTO_2))
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.enabledCategory",is(true)));
+    }
+
+    @Test
+    void updateErrorTest() throws Exception {
+
+        final int ID = 99;
+
+        Mockito.when(service.update(any(), any())). thenThrow(new ModelNotFoundException("ID NOT VALID: " + ID));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/categories/" + ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(CATEGORYDTO_2))
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ModelNotFoundException));
+
+    }
+
+
+    @Test
+    void deleteTest() throws Exception {
+        final int ID = 1;
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/categories/" + ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNoContent());
+    }
+
+
+    @Test
+    void deleteErrorTest() throws Exception {
+        final int ID = 99;
+
+        Mockito.doThrow(new ModelNotFoundException("ID NOT VALID: " + ID)).when(service).delete(ID);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/categories/" + ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ModelNotFoundException));
+    }
 
 }
 
